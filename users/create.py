@@ -23,6 +23,11 @@ async def create(response: Response, create_user: CreateUserPayload):
         access_token = create_access_token(
             data={"username": create_user.username}, expires_delta=access_token_expires
         )
-        response.set_cookie(key='access', value=access_token, httponly=True)
+        response.set_cookie(
+            key='access',
+            value=access_token,
+            httponly=True,
+            samesite='lax'
+        )
 
     return {'username': create_user.username}
