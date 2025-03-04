@@ -18,3 +18,22 @@ async def auth_required(access: str = Cookie(None)):
             'isAdmin': data['isAdmin'] or False
         }
     raise HTTPException(403)
+
+
+async def admin_required(access: str = Cookie(None)):
+    if not access:
+        raise HTTPException(403)
+    data = jwt.decode(
+        access,
+        SECRET_KEY,
+        algorithms=[ALGORITHM],
+        verify=False,
+        options={'verify_signature': False})
+    if 'username' in data and data['username'] and 'isAdmin' in data:
+        if not data['isAdmin']:
+            raise HTTPException(403)
+        return {
+            'username': data['username'],
+            'isAdmin': data['isAdmin'] or False
+        }
+    raise HTTPException(403)

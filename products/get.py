@@ -7,8 +7,8 @@ router = APIRouter()
 
 
 @router.get('/get')
-async def get(_: dict = Depends(auth_required)):
+async def get(_: dict = Depends(auth_required), search: str | None = None):
     with conn.cursor() as cur:
-        products = cur.execute('SELECT * FROM products').fetchall()
-        print(products)
+        query = 'SELECT * FROM products' if not search else f"SELECT * FROM products WHERE LOWER(name) LIKE '%{str(search).lower()}%'"
+        products = cur.execute(query).fetchall()
         return products

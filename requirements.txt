@@ -3,3 +3,4 @@ PyJWT~=2.10.1
 passlib~=1.7.4
 pydantic~=1.10.7
 psycopg~=3.2.5
+python-dotenv~=1.0.0

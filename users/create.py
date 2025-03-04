@@ -21,7 +21,7 @@ async def create(response: Response, create_user: CreateUserPayload):
         conn.commit()
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
-            data={"username": create_user.username}, expires_delta=access_token_expires
+            data={"username": create_user.username, 'isAdmin': False}, expires_delta=access_token_expires
         )
         response.set_cookie(
             key='access',
