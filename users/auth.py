@@ -15,10 +15,10 @@ async def auth(response: Response, auth_user: CreateUserPayload):
     with conn.cursor() as cur:
         user = cur.execute(f"SELECT * from users where username='{auth_user.username}';").fetchone()
         if not user:
-            raise HTTPException(status_code=400, detail='invalid data')
+            raise HTTPException(status_code=400, detail='Пользователя с таким username нет')
         verify_status = verify_password(auth_user.password, user['password'])
         if not verify_status:
-            raise HTTPException(status_code=400, detail='invalid data')
+            raise HTTPException(status_code=400, detail='Неправильный пароль')
 
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
