@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:15
+    container_name: appsec-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appsec_db
+    ports:
+      - "5432:5432"
+    networks:
+      - appsec-net
+
+  backend:
+    build: .
+    container_name: appsec-backend
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    networks:
+      - appsec-net
+
+  frontend:
+    build: ../frontend/
+    container_name: appsec-frontend
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      VITE_API: http://appsec-backend:5000
+    ports:
+      - "80:80"
+    networks:
+      - appsec-net
+
+networks:
+  appsec-net:
+    driver: bridge
