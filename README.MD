@@ -21,4 +21,5 @@ cd backend
 docker compose up
 ```
 Фронтенд будет доступен на `80` порту
+
 Информация о всех эндпоинтах (swagger) на `<domain>:5000/docs`
