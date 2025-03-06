@@ -1,12 +1,9 @@
 services:
   db:
-    image: postgres:15
+    build:
+      dockerfile: Dockerfile.db
     container_name: appsec-postgres
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: appsec_db
     ports:
       - "5432:5432"
     networks:
